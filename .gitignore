@@ -1,0 +1,8 @@
+*.vec
+*.vci
+*.o
+*.tkenvlog
+*.tkenvrc
+*~
+*.sca
+
