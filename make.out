@@ -1,0 +1,4 @@
+cd src && make
+make[1]: Entering directory '/home/adriano/Documentos/ccn-omnetpp/ccn-omnet/src'
+make[1]: Leaving directory '/home/adriano/Documentos/ccn-omnetpp/ccn-omnet/src'
+Makefile:2: recipe for target 'all' failed

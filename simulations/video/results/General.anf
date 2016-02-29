@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scave:Analysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:scave="http://www.omnetpp.org/omnetpp/scave">
+  <inputs>
+    <inputs name="/ccn-lite-omnet/simulations/video/results/General-*.vec"/>
+    <inputs name="/ccn-lite-omnet/simulations/video/results/General-*.sca"/>
+  </inputs>
+  <datasets>
+    <datasets name="client1[0] CCNoEther_Tau_2cli_2rtr_1svr.client1.appLayer">
+      <items xsi:type="scave:Add" filterPattern="module(CCNoEther_Tau_2cli_2rtr_1svr.client1.appLayer) AND name(client1[0])" type="VECTOR"/>
+      <items xsi:type="scave:Group" name="client1[0] CCNoEther_Tau_2cli_2rtr_1svr.client1.appLayer">
+        <items xsi:type="scave:Apply" operation="mean"/>
+        <items xsi:type="scave:LineChart" name="client1[0] CCNoEther_Tau_2cli_2rtr_1svr.client1.appLayer"/>
+      </items>
+    </datasets>
+  </datasets>
+  <chartSheets/>
+</scave:Analysis>

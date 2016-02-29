@@ -1,0 +1,3 @@
+package ccnpp;
+
+@license(LGPL);

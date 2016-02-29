@@ -1,0 +1,183 @@
+Simulation Description
+************************
+Simulação principal. 
+
+
+###############################################################################
+##  Experiment: CCN over Ethernet 
+###############################################################################
+
+[General]
+#sim-time-limit = 100s
+network = ccnlite.topologies.RNP_IPE
+description = "Example CCN over Ethernet with 2 clients, 2 routers, 1 servers. Scenario setup taken from clientX.cfg files"
+#sim-time-limit = 1
+## topology/scenario settings
+
+*.defaultDebugLevel = 0 	## for all simulation: 0=none, 1=Info, 2=Warning, 3=Error, 4=Detail
+*.auxDebug = true			## enable console debugging output
+
+## per node settings
+**.debugLevel = 0			## per host: 0=none, 1=Info, 2=Warning, 3=Error, 4=Detail
+
+## Network metrics
+**.linkDataRate = 10Gbps
+**.linkMeanDelay = 20ms
+**.linkVarDelay = 7ms
+**.linkBer = 0#1e-5
+
+**.eth[*].queueType = "DropTailQueue"
+**.eth[*].queue.frameCapacity = 50
+
+
+#####################################################################
+########################    AppLayer    #############################
+#####################################################################
+
+**.RR.appLayer.dummysender = true
+**.PB2.appLayer.dummysender = true
+**.AP.appLayer.dummysender = true
+**.AC.appLayer.dummysender = true
+**.TO.appLayer.dummysender = true
+**.MS.appLayer.dummysender = true
+**.AM.appLayer.dummysender = true
+**.MT.appLayer.dummysender = true
+
+**.*.appLayer.ds_start = 0s #DummySender Start Time
+**.*.appLayer.ds_stop = 1400s	#DummySender Stop Time
+
+**.appLayer.num_dummy_chunks = 10^4
+
+#Video Traffic
+**.RR.appLayer.sender = true
+**.AL.appLayer.sender = true
+**.PI.appLayer.sender = true
+**.PB2.appLayer.sender = true
+**.PA.appLayer.sender= true
+**.AC.appLayer.sender = true
+**.TO.appLayer.sender = true
+**.GO.appLayer.sender = true
+**.AM.appLayer.sender = true
+
+**.appLayer.howmany = 60
+
+**.*.cleanall = true
+**.*.toYuv = true
+**.*.evaluate = true
+**.*.qoe_metrics = true
+
+**.appLayer.lambda = 80
+
+#**.appLayer.frame_interval = 0.010
+**.appLayer.frame_interval = 0.010
+
+**.appLayer.base_contentname = "/cin/ufpe/movie"
+**.appLayer.max_delay = 500 ms   # is a packet lost if (receiver_time - sender-time) > max_delay
+**.appLayer.interestLifetime = 4000ms
+**.appLayer.max_retrans_attempts = 10
+
+#####################################################################
+##########################  Caching  ################################
+#####################################################################
+##Caching meta-algorithms: fixP, lce , no_cache , lcd, btw, prob_cache
+**.cache_policy = "${ D = priority_cache }"
+#**.cache_policy = "${ D = lce,lcd,prob_cache,fix0.1,btw, priority_cache}"
+
+##Caching algorithms: {lru,lfu,fifo,two,random}_cache
+**.RS = "${ R = lru }_cache"
+##Cache size (in bytes)
+**.cache_size = 1000000 Bytes # 1GB
+
+
+
+
+************************
+Calculation ...  prob_cache # column: caching*
+mean: 0.130161 std: 0.0458072 rows: 3014874
+Calculation ...  priority_cache # column: caching*
+mean: 0.294671 std: 0.451315 rows: 15943
+************* HIT_RATE **************
+Calculation ...  prob_cache # column: hit_rate*
+mean: 0.32008 std: 0.294951 rows: 20098
+Calculation ...  priority_cache # column: hit_rate*
+mean: 0.375928 std: 0.318664 rows: 19253
+Calculation ...  btw # column: hit_rate*
+mean: 0.0900032 std: 0.185643 rows: 26367
+Calculation ...  fix0.1 # column: hit_rate*
+mean: 0.312085 std: 0.294202 rows: 19920
+Calculation ...  lce # column: hit_rate*
+mean: 0.39495 std: 0.324212 rows: 19089
+Calculation ...  lcd # column: hit_rate*
+mean: 0.312088 std: 0.300146 rows: 20078
+************* HIT HOP **************
+Calculation ...  prob_cache # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+Calculation ...  priority_cache # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+Calculation ...  btw # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+Calculation ...  fix0.1 # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+Calculation ...  lce # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+Calculation ...  lcd # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+************* PSNR **************
+Calculation ...  prob_cache # column: psnr_*
+mean: 19.8775 std: 12.9749 rows: 480
+Calculation ...  priority_cache # column: psnr_*
+mean: 45.0317 std: 1.11146 rows: 480
+Calculation ...  btw # column: psnr_*
+mean: 44.7968 std: 4.73409 rows: 480
+Calculation ...  fix0.1 # column: psnr_*
+mean: 19.7276 std: 12.9979 rows: 480
+Calculation ...  lce # column: psnr_*
+mean: 45.4691 std: 0.144554 rows: 480
+Calculation ...  lcd # column: psnr_*
+mean: 45.3358 std: 2.10117 rows: 480
+************* SSIM **************
+Calculation ...  prob_cache # column: ssim_*
+mean: 0.579362 std: 0.212467 rows: 480
+Calculation ...  priority_cache # column: ssim_*
+mean: 0.98079 std: 0.0135277 rows: 480
+Calculation ...  btw # column: ssim_*
+mean: 0.974469 std: 0.100214 rows: 480
+Calculation ...  fix0.1 # column: ssim_*
+mean: 0.576975 std: 0.210314 rows: 480
+Calculation ...  lce # column: ssim_*
+mean: 0.98605 std: 0.000636891 rows: 480
+Calculation ...  lcd # column: ssim_*
+mean: 0.983569 std: 0.045137 rows: 480
+************* Delay ALL PACKETS **************
+Calculation ...  prob_cache # column: rtt_all_pkts_*
+mean: 0.0928037 std: 0.0650098 rows: 12826
+Calculation ...  priority_cache # column: rtt_all_pkts_*
+mean: 0.100413 std: 0.0787142 rows: 12850
+Calculation ...  btw # column: rtt_all_pkts_*
+mean: 0.163015 std: 0.100769 rows: 12419
+Calculation ...  fix0.1 # column: rtt_all_pkts_*
+mean: 0.0979409 std: 0.0735442 rows: 12842
+Calculation ...  lce # column: rtt_all_pkts_*
+mean: 0.092584 std: 0.0732766 rows: 12871
+Calculation ...  lcd # column: rtt_all_pkts_*
+mean: 0.106964 std: 0.0868107 rows: 12845
+************* DELAY VIDEO **************
+Calculation ...  prob_cache # column: delay_*
+mean: 0.0931243 std: 0.0395493 rows: 4987
+Calculation ...  priority_cache # column: delay_*
+mean: 0.0992251 std: 0.0578804 rows: 4969
+Calculation ...  btw # column: delay_*
+mean: 0.114991 std: 0.0482978 rows: 5018
+Calculation ...  fix0.1 # column: delay_*
+mean: 0.103267 std: 0.0397777 rows: 5061
+Calculation ...  lce # column: delay_*
+mean: 0.105475 std: 0.0614435 rows: 4973
+Calculation ...  lcd # column: delay_*
+mean: 0.121197 std: 0.0459738 rows: 5026
+

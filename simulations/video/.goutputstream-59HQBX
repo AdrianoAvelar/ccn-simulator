@@ -1,0 +1,167 @@
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/.
+// 
+
+#include "VideoTrace.h"
+#include <stdlib.h>
+#include "VideoHandlers/EvaluateTrace.h"
+
+VideoTrace::VideoTrace(std::string workdir, std::string trace,
+        string mp4_reconstructed) {
+    sdumpfile = new DumpFile();
+    rdumpfile = new DumpFile();
+    seqn = 1;
+    remain = 0;
+    this->wasSent = false;
+
+    this->workdir = workdir;
+    this->trace = "";
+    this->trace.append(workdir);
+
+    if (this->trace.at(this->trace.length() - 1) != '/')
+        this->trace.append("/");
+    this->trace.append(trace);
+
+    mp4file_rec = workdir;
+
+    if (mp4file_rec.at(mp4file_rec.length() - 1) != '/')
+        mp4file_rec.append("/");
+    mp4file_rec.append(mp4_reconstructed);
+
+}
+
+void VideoTrace::setTraceFile(const char* strace, const char* rtrace) {
+
+    std::string send_trace = workdir;
+    if (send_trace.at(send_trace.length() - 1) != '/')
+        send_trace.append("/");
+    send_trace.append(strace);
+
+    std::string receiver_trace = workdir;
+    if (receiver_trace.at(receiver_trace.length() - 1) != '/')
+        receiver_trace.append("/");
+    receiver_trace.append(rtrace);
+
+    sdumpfile->setFileName(send_trace.c_str());
+    rdumpfile->setFileName(receiver_trace.c_str());
+}
+
+std::string VideoTrace::getNextChunk() {
+
+    std::string name = content_name;
+    name.append("#");
+
+    seqn += 1; //Next sequence number
+
+    stringstream ss;
+    ss << seqn;
+    name.append(ss.str());
+    return name;
+}
+
+std::string VideoTrace::getChunk() {
+    std::string name = content_name;
+    name.append("#");
+
+    //Request the first chunk
+    stringstream ss;
+    ss << seqn;
+    name.append(ss.str());
+
+    return name;
+}
+
+int VideoTrace::receiveMessage(datachunk *chunks) {
+    // EV << numReceived << " video message arrived at : " << simTime();
+
+    videochunks_rx vrx;
+    vrx.pkt_id_ = chunks->pkt_id_;
+    vrx.stime_ = chunks->stime_;  //Register the arrival time
+    vrx.rtime_ = simTime().dbl();
+    vrx.packetSize_ = chunks->packetSize_;
+
+    VideoChunks.push_back(vrx);
+    remain = chunks->remain;
+
+    if (remain > 0) {
+        seqn = chunks->pkt_id_;
+        return seqn;
+    } else
+        return 0;
+}
+
+void VideoTrace::clear() {
+    seqn = 1;
+    VideoChunks.clear();
+    wasSent = false;
+
+}
+/*
+ void finish2() {
+
+ rdumpfile->open("w");
+
+ if (rdumpfile->isOpen()) {
+
+ videochunks_v::iterator it = VideoChunks.begin();
+
+ for (; it != VideoChunks.end(); it++) {
+ char buf[100];
+ int last = 0;
+ sprintf(buf, "%-16f id %-16d ccnx %-16d\n", (*it).rtime_,
+ (*it).frame_pkt_id_, (*it).packetSize_);
+ rdumpfile->add(buf);
+ }
+ rdumpfile->close();
+ }
+
+ //FIXME[EAMA] Bolar um jeito melhor de fazer isso,
+ //estou simulando o envio dos pacotes perdidos pegando a média entre dois
+ //pacotes.
+
+ sdumpfile->open("w");
+ if (sdumpfile->isOpen()) {
+
+ videochunks_v::iterator it = VideoChunks.begin();
+ int last = 0;
+ char buf[100];
+
+ for (; it != VideoChunks.end(); it++) {
+
+ while ((*it).frame_pkt_id_ > (last + 1)) {
+ sprintf(buf, "%-16f id %-16d ccnx %-16d\n", (*it).stime_,
+ (*it).frame_pkt_id_, (*it).packetSize_);
+ sdumpfile->add(buf);
+ (*it).frame_pkt_id_ += 1;
+ }
+
+ sprintf(buf, "%-16f id %-16d ccnx %-16d\n", (*it).stime_,
+ (*it).frame_pkt_id_, (*it).packetSize_);
+ sdumpfile->add(buf);
+
+ last = (*it).frame_pkt_id_;
+
+ }
+ sdumpfile->close();
+ }
+ }
+ */
+
+void VideoTrace::finish() {
+
+    rdumpfile->open("w");
+    sdumpfile->open("w");
+
+    //FIXME[EAMA] Bolar um jeito melhor de fazer isso,
+    //estou simulan

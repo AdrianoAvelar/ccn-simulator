@@ -1,0 +1,95 @@
+
+
+Testando o server hit.. nessa simulação foi usado caches com 100Mbytes apenas.
+No caderno eu anotei os experimentos para cache com 500Mbytes.
+
+
+
+Calculation ...  prob_cache # column: caching*
+mean: 0.146085 std: 0.0515052 rows: 3029760
+Calculation ...  priority_cache # column: caching*
+mean: 0.240358 std: 0.33847 rows: 18067
+************* HIT_RATE **************
+Calculation ...  prob_cache # column: hit_rate*
+mean: 0.112658 std: 0.19602 rows: 20207
+Calculation ...  priority_cache # column: hit_rate*
+mean: 0.112554 std: 0.211622 rows: 20230
+Calculation ...  btw # column: hit_rate*
+mean: 0.0151609 std: 0.0362437 rows: 24987
+Calculation ...  fix0.1 # column: hit_rate*
+mean: 0.105394 std: 0.189745 rows: 20016
+Calculation ...  lce # column: hit_rate*
+mean: 0.127553 std: 0.221409 rows: 19983
+Calculation ...  lcd # column: hit_rate*
+mean: 0.119626 std: 0.217681 rows: 19118
+************* HIT HOP **************
+Calculation ...  prob_cache # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+Calculation ...  priority_cache # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+Calculation ...  btw # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+Calculation ...  fix0.1 # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+Calculation ...  lce # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+Calculation ...  lcd # column: hit_hop
+sed: can't read out.vec: No such file or directory
+awk: fatal: division by zero attempted
+************* PSNR **************
+Calculation ...  prob_cache # column: psnr_*
+mean: 35.7182 std: 14.5257 rows: 480
+Calculation ...  priority_cache # column: psnr_*
+mean: 45.4178 std: 0.429303 rows: 480
+Calculation ...  btw # column: psnr_*
+mean: 44.8837 std: 3.87657 rows: 431
+Calculation ...  fix0.1 # column: psnr_*
+mean: 34.7714 std: 15.0054 rows: 480
+Calculation ...  lce # column: psnr_*
+mean: 45.466 std: 0.164599 rows: 480
+Calculation ...  lcd # column: psnr_*
+mean: 44.7132 std: 5.60016 rows: 456
+************* SSIM **************
+Calculation ...  prob_cache # column: ssim_*
+mean: 0.838434 std: 0.226423 rows: 480
+Calculation ...  priority_cache # column: ssim_*
+mean: 0.985395 std: 0.00519768 rows: 480
+Calculation ...  btw # column: ssim_*
+mean: 0.97603 std: 0.082463 rows: 431
+Calculation ...  fix0.1 # column: ssim_*
+mean: 0.821694 std: 0.23676 rows: 480
+Calculation ...  lce # column: ssim_*
+mean: 0.986056 std: 0.000387753 rows: 480
+Calculation ...  lcd # column: ssim_*
+mean: 0.970196 std: 0.121261 rows: 456
+************* Delay ALL PACKETS **************
+Calculation ...  prob_cache # column: rtt_all_pkts_*
+mean: 0.13823 std: 0.100802 rows: 12014
+Calculation ...  priority_cache # column: rtt_all_pkts_*
+mean: 0.142772 std: 0.107978 rows: 12161
+Calculation ...  btw # column: rtt_all_pkts_*
+mean: 0.19183 std: 0.0940821 rows: 9856
+Calculation ...  fix0.1 # column: rtt_all_pkts_*
+mean: 0.147543 std: 0.113247 rows: 11943
+Calculation ...  lce # column: rtt_all_pkts_*
+mean: 0.139891 std: 0.103398 rows: 12211
+Calculation ...  lcd # column: rtt_all_pkts_*
+mean: 0.139696 std: 0.114243 rows: 12087
+************* DELAY VIDEO **************
+Calculation ...  prob_cache # column: delay_*
+mean: 0.140014 std: 0.0359878 rows: 5094
+Calculation ...  priority_cache # column: delay_*
+mean: 0.132217 std: 0.0367127 rows: 5129
+Calculation ...  btw # column: delay_*
+mean: 0.131959 std: 0.0320411 rows: 4581
+Calculation ...  fix0.1 # column: delay_*
+mean: 0.14178 std: 0.0312598 rows: 5155
+Calculation ...  lce # column: delay_*
+mean: 0.14417 std: 0.0388232 rows: 5073
+Calculation ...  lcd # column: delay_*
+mean: 0.142157 std: 0.0339335 rows: 4823
