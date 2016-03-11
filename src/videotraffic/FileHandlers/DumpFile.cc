@@ -7,33 +7,39 @@
 #include "DumpFile.h"
 
 DumpFile::DumpFile() {
-    this->filename = NULL;
+    this->filePath = NULL;
     this->fp = NULL;
     is_open = false;
 }
 
+void DumpFile::setFilePath(const char* filePath) {
+
+    this->filePath = new char[strlen(filePath) + 1];
+    memcpy(this->filePath, filePath, strlen(filePath)) ;
+    this->filePath[strlen(filePath)] = '\0';
+}
+
+
 void DumpFile::setFileName(const char* filename) {
+    this->fileName = new char[strlen(filename) + 1];
+    memcpy(this->fileName, filename, strlen(filename));
+    this->fileName[strlen(filename)] = '\0';
+}
 
-    //FIXME:[EAMA] Remover lixo
+const char* DumpFile::getFilePath() {
 
-
-    this->filename = new char[strlen(filename) + 1];
-    memcpy(this->filename, filename, strlen(filename)) ;
-    this->filename[strlen(filename)] = '\0';
-
-
-   // strncpy(this->filename, filename, strlen(filename));
+    return (const char*) filePath;
 }
 
 const char* DumpFile::getFileName() {
 
-    return (const char*) filename;
+    return (const char*) fileName;
 }
 
 int DumpFile::open(const char* option) {
 
-    if ((fp = fopen(filename, option)) == NULL) {
-        fprintf(stderr, "DumpFile::open: can't open file %s\n", filename);
+    if ((fp = fopen(filePath, option)) == NULL) {
+        fprintf(stderr, "DumpFile::open: can't open file %s\n", filePath);
         exit(-1);
     }
 
@@ -55,7 +61,7 @@ void DumpFile::close() {
             is_open = false;
         } else {
             fprintf(stderr, "DumpFile::close(): Can't close file %s\n",
-                    filename);
+                    filePath);
 
         }
     }
@@ -64,7 +70,7 @@ void DumpFile::close() {
 void DumpFile::add(char* buf) {
 
     if (!is_open) {
-        fprintf(stderr, "Can't add line file %s is not open\n", filename);
+        fprintf(stderr, "Can't add line file %s is not open\n", filePath);
         exit(-1);
     }
 
@@ -77,7 +83,8 @@ bool DumpFile::isOpen() {
 }
 DumpFile::~DumpFile() {
 
-    delete filename;
+    delete filePath;
+    delete fileName;
     delete fp;
     close();
 

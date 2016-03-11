@@ -37,6 +37,8 @@ CcnVideoApp::CcnVideoApp() {
     video = 0;
     dummy_active = false;
     frame_interval = 0;
+
+    bytes_ = 0;
 }
 
 CcnVideoApp::~CcnVideoApp() {
@@ -55,6 +57,10 @@ CcnVideoApp::~CcnVideoApp() {
 
     if(timeout_video != 0)
         cancelAndDelete(timeout_video);
+
+    if(thorugput_timer != 0)
+           cancelAndDelete(thorugput_timer);
+
 }
 
 /**
@@ -63,7 +69,7 @@ CcnVideoApp::~CcnVideoApp() {
 void CcnVideoApp::initialize(int stage) {
 
     //Timers
-    if(stage == 3){
+    if(stage == 4){
     begin = Util::currentDateTime();
     start = clock();
 
@@ -85,7 +91,7 @@ void CcnVideoApp::initialize(int stage) {
     double startTime = par("startTime");
 
     char rec[64];
-    sprintf(rec, "%s_runid_%d.mp4", getParentModule()->getName(), currentRunId);
+    sprintf(rec, "%s_rid_%d.mp4", getParentModule()->getName(), currentRunId);
     timeout_video = new cMessage("Timeout_Video");
 
     video = new VideoTrace("results", TRACE_REF, rec);
@@ -95,13 +101,7 @@ void CcnVideoApp::initialize(int stage) {
     event->setKind(SEND_OP);
     scheduleAt(simTime() + startTime, event);
 
-    } else if(stage == 4){
-
-        registerMyselfInCcnLayer();
-
-    }else if(stage == 5){
-
-
+    registerMyselfInCcnLayer();
 
     char nome[32];
     sprintf(nome, "hit_hop_%s", getParentModule()->getName());
@@ -112,6 +112,10 @@ void CcnVideoApp::initialize(int stage) {
 
     last_rtt = simTime();
 
+    app_throughput = registerSignal("app_throughput");
+
+    thorugput_timer = new cMessage("AppThroughput");
+    scheduleAt(simTime() + startTime, thorugput_timer);
     }
 }
 
@@ -146,7 +150,7 @@ void CcnVideoApp::handleMessage(cMessage *msg) {
             video->finish();
 
             if (par("evaluate").boolValue() == true)
-                video->eval("a01.mp4");
+                video->reconstructing("a01.mp4");
 
             if (par("toYuv").boolValue() == true)
                 video->toYuv();
@@ -162,7 +166,7 @@ void CcnVideoApp::handleMessage(cMessage *msg) {
 
             if (count_req < video_count || video_count < 0) {
                 event->setKind(SEND_OP);
-                scheduleAt(simTime() + SEND_OTHER_VIDEO,event);
+                scheduleAt(simTime(),event);
             }
             delete msg;
 
@@ -206,7 +210,14 @@ void CcnVideoApp::handleMessage(cMessage *msg) {
         } else if (msg->getKind() == STOP_SIMULATION) {
             delete msg;
             endSimulation();
-        }
+
+        }else if(msg == thorugput_timer){
+
+            double thr = bytes_/(INTERVAL)*8/1000000;
+            bytes_ = 0;
+            emit(app_throughput,thr);
+            scheduleAt(simTime()+INTERVAL,thorugput_timer);
+         }
 
     } else {
 
@@ -334,7 +345,10 @@ void CcnVideoApp::handlerData(CcnAppMessage * msg) {
 
     datachunk *chunk = (datachunk *) chunksBuffer;
 
+
     if (chunk->protocol == PT_VIDEO) {
+
+        bytes_+= chunk->packetSize_;
 
         //Cancel timeout stuffs we got one packet.
         cancelEvent(event);

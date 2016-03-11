@@ -36,11 +36,11 @@ void SenderTrace::get_next(int& ndx, tracerec_t& t)
 int SenderTrace::convertSenderTrace(const char* src,const char* dst) {
 
     DumpFile* trace = new DumpFile();
-    trace->setFileName(src);
+    trace->setFilePath(src);
     trace->open();
 
     DumpFile* video = new DumpFile();
-    video->setFileName(dst);
+    video->setFilePath(dst);
     video->open("w");
 
     unsigned long no_ , length_ ;

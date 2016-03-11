@@ -20,6 +20,10 @@ public:
 
     void setFileName(const char* filename);
     const char* getFileName();
+
+    void setFilePath(const char* filename);
+    const char* getFilePath();
+
     int  open(const char* option = "r");
     void close();
     void add(char* line);
@@ -28,7 +32,8 @@ public:
 
 private :
     bool is_open;
-    char *filename;
+    char *filePath;
+    char *fileName;
     FILE *fp;
 
 };

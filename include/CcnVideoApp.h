@@ -29,7 +29,7 @@
 #define BULK_TIME 1.0
 
 #define SEND_OTHER_VIDEO truncnormal(20,5)
-
+#define INTERVAL 0.5
 
 class CcnVideoApp : public cSimpleModule, public ICcnApp {
 public:
@@ -48,6 +48,8 @@ public:
     void handlerData(CcnAppMessage * ccnmsg);
     void retransmiting();
     virtual int numInitStages() const  {return 6;}
+
+
 
 private:
     VideoTrace *video;
@@ -91,6 +93,11 @@ private:
 
     int currentRunId ;
     int appId;
+    cMessage* thorugput_timer;
+
+    simsignal_t app_throughput;
+
+    double bytes_;
 };
 
 #endif /* CcnVideoApp_H_ */

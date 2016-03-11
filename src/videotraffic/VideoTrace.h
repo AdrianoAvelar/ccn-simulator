@@ -51,6 +51,7 @@ public:
     void clear();
     void setWordDir();
     void eval(string mp4_original);
+    void reconstructing(string mp4_original);
 
     void cleanAll();
 
@@ -90,7 +91,7 @@ public:
     }
 
     inline string getBaseName(){
-        return mp4file_rec;
+        return mp4ReconstructedPath;
     }
 
 
@@ -106,7 +107,8 @@ private:
     double maxdelay;
     int remain;
     bool wasSent;
-    string mp4file_rec;
+    string mp4ReconstructedPath;
+    string mp4ReconstructedName;
     int out_of_order;
     int pkts_dropped;
     cOutVector rttOutVector;

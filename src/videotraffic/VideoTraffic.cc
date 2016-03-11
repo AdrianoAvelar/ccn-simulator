@@ -25,14 +25,14 @@ VideoTraffic::VideoTraffic(const char* videodat_filename, const char* rd_filenam
 
 
     SenderTrace *file = new SenderTrace();
-    file->setFileName(videodat_filename);
+    file->setFilePath(videodat_filename);
 
     rd = new DumpFile();
-    rd->setFileName(rd_filename);
+    rd->setFilePath(rd_filename);
     rd->open("w");
 
     sd = new DumpFile();
-    sd->setFileName(sd_filename);
+    sd->setFilePath(sd_filename);
     sd->open("w");
 
     traffic = new VideoTrafficGenerator();
@@ -127,7 +127,7 @@ int VideoTraffic::addToSenderTrace(double time, VideoPacket *msg) {
         return 0;
     } else {
         EV << "Cannot add to sender trace. Sender Dump:"
-                << sd->getFileName() << "is no open" << std::endl;
+                << sd->getFilePath() << "is no open" << std::endl;
 
         return -1;
     }

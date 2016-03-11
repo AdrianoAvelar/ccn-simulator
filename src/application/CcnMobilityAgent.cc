@@ -152,7 +152,7 @@ void CcnMobilityAgent::processMobilityMessage(CcnAppMessage* appmsg, MobilityApp
     for(int k = 0; k < contentArraySize; k++){
         contentName = mobmsg->getContents(k);
         retContentVector.push_back(contentName);
-        PRINT_ERR << " c:" << contentName << " src: " << srcAddr << " dst: " << dstAddr << endl;
+//        PRINT_ERR << " c:" << contentName << " src: " << srcAddr << " dst: " << dstAddr << endl;
        // ft->addOrUpdateL2FwdRule(contentName.c_str(), srcAddr, dstAddr, false,1,true);
         ospfnrouter->addOrUpdatePrefixTableEntry(contentName.c_str(), dstAddr, srcAddr, false,1,true);
         updateTable = true;
@@ -160,7 +160,7 @@ void CcnMobilityAgent::processMobilityMessage(CcnAppMessage* appmsg, MobilityApp
 
     if(updateTable)
         ospfnrouter->rebuildForwardingTable();
-    PRINT_ERR << "} end;\n";
+//    PRINT_ERR << "} end;\n";
 
     //Forwarding VirtualInterest if this module is not the destination of virtual interest
 //    if(ft->getRouterNamePrefix() != appmsg->getContentName())

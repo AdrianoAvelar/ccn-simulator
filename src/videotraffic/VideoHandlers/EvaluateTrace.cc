@@ -52,8 +52,8 @@ int EvaluateTrace::evaluate() {
     strncpy(buf[1], "0", SIZE_BUFFER);
     strncpy(buf[1], "-p", SIZE_BUFFER);
     strncpy(buf[2], "-0", SIZE_BUFFER);
-    strncpy(buf[3], sd->getFileName(), SIZE_BUFFER);
-    strncpy(buf[4], rd->getFileName(), SIZE_BUFFER);
+    strncpy(buf[3], sd->getFilePath(), SIZE_BUFFER);
+    strncpy(buf[4], rd->getFilePath(), SIZE_BUFFER);
     strncpy(buf[5], this->senderTrace, SIZE_BUFFER);
     strncpy(buf[6], this->mp4file, SIZE_BUFFER);
     strncpy(buf[7], this->mp4output, SIZE_BUFFER);

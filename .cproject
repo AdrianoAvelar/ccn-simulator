@@ -19,7 +19,12 @@
 						<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.2019264844" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
 							<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.2019264844.1083702581" name=""/>
 							<builder id="org.eclipse.cdt.build.core.settings.default.builder.935673859" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
-							<tool id="org.eclipse.cdt.build.core.settings.holder.libs.1714577027" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.libs.1714577027" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs">
+								<option id="org.eclipse.cdt.build.core.settings.holder.libfiles.1554278790" name="Library Files" superClass="org.eclipse.cdt.build.core.settings.holder.libfiles" valueType="libFiles">
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="../libgpac-dev"/>
+								</option>
+								<option id="org.eclipse.cdt.build.core.settings.holder.libpaths.1118264885" name="Library Paths" superClass="org.eclipse.cdt.build.core.settings.holder.libpaths"/>
+							</tool>
 							<tool id="org.eclipse.cdt.build.core.settings.holder.905947381" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.393401266" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths"/>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1077703308" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>

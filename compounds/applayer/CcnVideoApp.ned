@@ -21,7 +21,7 @@ simple CcnVideoApp like ICcnApp
         @display("i=block/browser");
         int video_count = default(1);
         string base_contentname = default("/cin/ufpe/movie");
-        double max_delay @unit(ms) = default(5ms);
+        double max_delay @unit(ms) = default(50ms);
         int sender = default(0);
         //https://www.ccnx.org/releases/latest/doc/technical/InterestMessage.html
         double interestLifetime @unit(ms) = default(4000ms);
@@ -44,6 +44,13 @@ simple CcnVideoApp like ICcnApp
         bool qoe_metrics = default(false);
         
         string ccndModule = "^.ccnlayer.ccnd";
+        
+        @signal[hitHop](type="long");
+        @signal[rttAll](type="long");
+        
+        @statistic[appThroughput](title="App Throughput"; source="app_throughput"; record=vector,mean; interpolationmode=none);
+        @statistic[hitHop](title="Hit Hop"; source="hit_hop"; record=vector,mean; interpolationmode=none);
+        @statistic[rttAll](title="RTT All"; source="rtt_all_pkts"; record=vector,mean; interpolationmode=none);
     
       gates:
         input ccnIn;

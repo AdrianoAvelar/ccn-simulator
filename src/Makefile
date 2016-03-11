@@ -42,7 +42,8 @@ INCLUDE_PATH = \
     -Iospfn/router \
     -Ivideotraffic \
     -Ivideotraffic/FileHandlers \
-    -Ivideotraffic/VideoHandlers
+    -Ivideotraffic/VideoHandlers \
+    -Ivideotraffic/evalvid
 
 # Additional object and library files to link with
 EXTRA_OBJS =
@@ -213,13 +214,14 @@ clean:
 	$(Q)-rm -f videotraffic/*_m.cc videotraffic/*_m.h
 	$(Q)-rm -f videotraffic/FileHandlers/*_m.cc videotraffic/FileHandlers/*_m.h
 	$(Q)-rm -f videotraffic/VideoHandlers/*_m.cc videotraffic/VideoHandlers/*_m.h
+	$(Q)-rm -f videotraffic/evalvid/*_m.cc videotraffic/evalvid/*_m.h
 
 cleanall: clean
 	$(Q)-rm -rf $(PROJECT_OUTPUT_DIR)
 
 depend:
 	$(qecho) Creating dependencies...
-	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc AppMessages/*.cc application/*.cc cache/*.cc ccn-lite/*.cc content/*.cc network/*.cc ospfn/*.cc ospfn/interface/*.cc ospfn/messagehandler/*.cc ospfn/neighbor/*.cc ospfn/router/*.cc videotraffic/*.cc videotraffic/FileHandlers/*.cc videotraffic/VideoHandlers/*.cc
+	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc AppMessages/*.cc application/*.cc cache/*.cc ccn-lite/*.cc content/*.cc network/*.cc ospfn/*.cc ospfn/interface/*.cc ospfn/messagehandler/*.cc ospfn/neighbor/*.cc ospfn/router/*.cc videotraffic/*.cc videotraffic/FileHandlers/*.cc videotraffic/VideoHandlers/*.cc videotraffic/evalvid/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/Ccn.o: Ccn.cc \

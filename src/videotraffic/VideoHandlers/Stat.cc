@@ -172,7 +172,7 @@ void CalcSRate(dump_t *pD, unsigned l, double interval, char *id)
 
 void OutJitter(dump_t *pD, unsigned l, char *id)
 {
-  FILE *f=0;
+  FILE *f = 0;
   unsigned i;
   double cjit = 0;
   char s[32];

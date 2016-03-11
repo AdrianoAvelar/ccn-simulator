@@ -137,7 +137,7 @@ void Ccnr::addToDummyCache(const char *contentName, const int numChunks,
         //out.str("");
         chunks.push_back(chunk);
 
-        DB.insert(std::make_pair(name, chunks));
+        CCNR.insert(std::make_pair(name, chunks));
         chunks.clear();
     }
 
@@ -149,7 +149,7 @@ void Ccnr::addToCache(const char* contentName, const char* localPath) {
 //    std::string extension = str.substr(0,found);
 
     SenderTrace *file = new SenderTrace();
-    file->setFileName(localPath);
+    file->setFilePath(localPath);
 
     VideoTrafficGenerator* traffic = new VideoTrafficGenerator();
     traffic->setTraceFile(file);
@@ -163,15 +163,12 @@ void Ccnr::addToCache(const char* contentName, const char* localPath) {
         chunk.protocol = PT_VIDEO;
         chunks.push_back(chunk);
 
-//        fprintf(stderr,"frametype: %d size: %d type: %d id: %d time: %f vsize: %d\n",chunk->frametype_,chunk->packetSize_,
-//                                   chunk->packetType_,
-//                                   chunk->frame_pkt_id_,chunk->time_, chunks.size());
-
+//        fprintf(stdout,"frametype: %d size: %d type: %d id: %d time: %f vsize: %d\n",chunk.frametype_,chunk.packetSize_,
+//                                   chunk.packetType_,
+//                                   chunk.pkt_id_,chunk.stime_, chunks.size());
     }
 
-
-
-    DB.insert(std::make_pair(contentName, chunks));
+    CCNR.insert(std::make_pair(contentName, chunks));
 
 //    DATABASE::iterator db = DB.find(contentName);
 //    chunk_entry::iterator dbIt;
@@ -209,15 +206,15 @@ ccnr_response * Ccnr::lookup(CcnPacket *ccnPkt) {
     content = Util::removeChunkId(content);
 
     unsigned long requestedChunkId = Util::getChunkId(contentName);
-    DATABASE::iterator db = DB.find(content);
+    DATABASE::iterator db = CCNR.find(content);
 
-    if (db != DB.end()) {
+    if (db != CCNR.end()) {
 
         if (Util::isDummyApp(contentName)) {
 
             datachunk chunk;
             chunk.pkt_id_ = requestedChunkId;
-            chunk.packetSize_ = 100;
+            chunk.packetSize_ = 1024;
             chunk.protocol = PT_DUMMY;
 
             ccnr_response *res = new ccnr_response;
@@ -228,12 +225,12 @@ ccnr_response * Ccnr::lookup(CcnPacket *ccnPkt) {
 
         } else {
 
-            chunks_entry::iterator dbIt;
+        chunks_entry::iterator dbIt;
         for (dbIt = (db->second).begin(); dbIt != (db->second).end(); dbIt++) {
-            /**
-             fprintf(stderr, "type: %d size: %d type: %d id: %d time: %f\n",
-             (*dbIt).frametype_, (*dbIt).packetSize_, (*dbIt).packetType_,
-             (*dbIt).frame_pkt_id_, (*dbIt).time_); **/
+
+//            fprintf(stdout,"frametype: %d size: %d type: %d id: %d time: %f \n",(*dbIt).frametype_,(*dbIt).packetSize_,
+//                    (*dbIt).packetType_,
+//                    (*dbIt).pkt_id_,(*dbIt).stime_);
             unsigned long pkt_id = (*dbIt).pkt_id_;
 
             if (pkt_id == requestedChunkId) {

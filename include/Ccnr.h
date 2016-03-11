@@ -95,7 +95,7 @@ class Ccnr : public cSimpleModule {
 	int *init_repos(vector<int>);
 	int *init_clients(vector<int>);
 
-	typedef boost::unordered_map < chunk_t , chunks_entry > DATABASE;
+	typedef map< chunk_t , chunks_entry > DATABASE;
 
 	static vector<file> catalog;
 	static zipf_distribution zipf;
@@ -116,6 +116,7 @@ class Ccnr : public cSimpleModule {
     private:
 
 	chunks_entry CHUNK_ENTRY;
+	DATABASE CCNR;
 	DATABASE DB;
 	vector<int> binary_strings(int,int);
 
