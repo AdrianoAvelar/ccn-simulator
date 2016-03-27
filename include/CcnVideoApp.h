@@ -48,6 +48,7 @@ public:
     void handlerData(CcnAppMessage * ccnmsg);
     void retransmiting();
     virtual int numInitStages() const  {return 6;}
+    void evaluate(double delay_to_another_request = 0);
 
 
 

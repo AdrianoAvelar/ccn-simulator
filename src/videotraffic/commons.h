@@ -29,14 +29,15 @@ struct tracerec {
  typedef struct tracerec tracerec_t;
 
  enum kinds{
-        SEND_OP = 0x1,
-        START_DUMMY = 0x2,
-        STOP_DUMMY = 0x3,
-        WAIT_OP = 0x4,
-        FINISH_OP = 0x5,
-        TIMEOUT = 0x6,
-        STOP_SIMULATION = 0x7,
-        EVALUATE = 0x8
+        SEND_OP = 1,
+        START_DUMMY = 2,
+        STOP_DUMMY =3,
+        WAIT_OP = 4,
+        FINISH_OP = 5,
+        TIMEOUT = 6,
+        STOP_SIMULATION = 7,
+        EVALUATE = 8,
+        EVALUATE_INCOMPLETED_FILE = 9
     };
 
 #ifndef L

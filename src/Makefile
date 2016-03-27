@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for ccnpp
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -I../../inet-3.0/src/inet/linklayer/common -I../../inet-3.0/src -I../../inet-3.0/src/inet/transportlayer/contract/udp -I../../inet-3.0/src/inet/networklayer/contract/ipv6 -I../include -I../../inet-3.0/src/inet/routing/ospfv2/messagehandler -I../../inet-3.0/src/inet/common/queue -I../../inet-3.0/src/inet/routing/ospfv2 -I../../inet-3.0/src/inet/networklayer/contract/ipv4 -I../../inet-3.0/src/inet/common -I../../inet-3.0/src/inet/networklayer/common -I../../inet-3.0/src/inet/networklayer/ipv4 -I../../inet-3.0/src/inet/networklayer/contract -L../../inet-3.0/out/$$\(CONFIGNAME\)/src -lgpac -lINET -DINET_IMPORT -KINET_PROJ=../../inet-3.0
+#  opp_makemake -f --deep -I../../inet-3.0/src/inet/linklayer/common -I../../inet-3.0/src/inet/networklayer/ipv4 -I../../inet-3.0/src/inet/routing/ospfv2/messagehandler -I../../inet-3.0/src -I../../inet-3.0/src/inet/networklayer/contract/ipv4 -I../../inet-3.0/src/inet/common -I../../inet-3.0/src/inet/networklayer/contract -I../../inet-3.0/src/inet/networklayer/contract/ipv6 -I../include -I../../inet-3.0/src/inet/transportlayer/contract/udp -I../../inet-3.0/src/inet/routing/ospfv2 -I../../inet-3.0/src/inet/networklayer/common -I../../inet-3.0/src/inet/common/queue -L../../inet-3.0/out/$$\(CONFIGNAME\)/src -lgpac -lINET -DINET_IMPORT -KINET_PROJ=../../inet-3.0
 #
 
 # Name of target to be created (-o option)
@@ -16,18 +16,18 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(CMDENV_LIBS)
 # C++ include paths (with -I)
 INCLUDE_PATH = \
     -I../../inet-3.0/src/inet/linklayer/common \
-    -I../../inet-3.0/src \
-    -I../../inet-3.0/src/inet/transportlayer/contract/udp \
-    -I../../inet-3.0/src/inet/networklayer/contract/ipv6 \
-    -I../include \
+    -I../../inet-3.0/src/inet/networklayer/ipv4 \
     -I../../inet-3.0/src/inet/routing/ospfv2/messagehandler \
-    -I../../inet-3.0/src/inet/common/queue \
-    -I../../inet-3.0/src/inet/routing/ospfv2 \
+    -I../../inet-3.0/src \
     -I../../inet-3.0/src/inet/networklayer/contract/ipv4 \
     -I../../inet-3.0/src/inet/common \
-    -I../../inet-3.0/src/inet/networklayer/common \
-    -I../../inet-3.0/src/inet/networklayer/ipv4 \
     -I../../inet-3.0/src/inet/networklayer/contract \
+    -I../../inet-3.0/src/inet/networklayer/contract/ipv6 \
+    -I../include \
+    -I../../inet-3.0/src/inet/transportlayer/contract/udp \
+    -I../../inet-3.0/src/inet/routing/ospfv2 \
+    -I../../inet-3.0/src/inet/networklayer/common \
+    -I../../inet-3.0/src/inet/common/queue \
     -I. \
     -IAppMessages \
     -Iapplication \
@@ -60,59 +60,59 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 # Object files for local .cc and .msg files
 OBJS = \
     $O/CcnInet.o \
-    $O/CcnCore.o \
-    $O/CcnAdmin.o \
     $O/Util.o \
-    $O/shared.o \
     $O/Parser.o \
+    $O/CcnAdmin.o \
+    $O/shared.o \
     $O/Ccn.o \
-    $O/application/CcnVideoApp.o \
+    $O/CcnCore.o \
     $O/application/CcnDummyApp.o \
+    $O/application/CcnVideoApp.o \
     $O/application/CcnMobilityAgent.o \
     $O/cache/prob_cache.o \
     $O/cache/lru_cache.o \
-    $O/cache/RankCache.o \
     $O/cache/base_cache.o \
-    $O/content/zipf.o \
+    $O/cache/RankCache.o \
     $O/content/Ccnr.o \
+    $O/content/zipf.o \
     $O/network/ForwardingTable.o \
-    $O/ospfn/OSPFNRouting.o \
     $O/ospfn/OSPFNNeighborhood.o \
+    $O/ospfn/OSPFNRouting.o \
     $O/ospfn/interface/OSPFNInterfaceStateDown.o \
     $O/ospfn/interface/OSPFNInterfaceStatePointToPoint.o \
     $O/ospfn/interface/OSPFNInterfaceState.o \
     $O/ospfn/interface/OSPFNInterface.o \
-    $O/ospfn/messagehandler/OSPFNDatabaseDescriptionHandler.o \
-    $O/ospfn/messagehandler/OSPFNLinkStateRequestHandler.o \
-    $O/ospfn/messagehandler/OSPFNMessageHandler.o \
     $O/ospfn/messagehandler/OSPFNLinkStateAcknowledgementHandler.o \
+    $O/ospfn/messagehandler/OSPFNLinkStateRequestHandler.o \
     $O/ospfn/messagehandler/OSPFNHelloHandler.o \
-    $O/ospfn/neighbor/OSPFNNeighbor.o \
-    $O/ospfn/neighbor/OSPFNNeighborStateFull.o \
+    $O/ospfn/messagehandler/OSPFNDatabaseDescriptionHandler.o \
+    $O/ospfn/messagehandler/OSPFNMessageHandler.o \
     $O/ospfn/neighbor/OSPFNNeighborState.o \
+    $O/ospfn/neighbor/OSPFNNeighborStateFull.o \
+    $O/ospfn/neighbor/OSPFNNeighbor.o \
     $O/ospfn/neighbor/OSPFNNeighborStateInit.o \
     $O/ospfn/neighbor/OSPFNNeighborStateExchangeStart.o \
     $O/ospfn/neighbor/OSPFNNeighborStateDown.o \
     $O/ospfn/router/OSPFNRouter.o \
-    $O/videotraffic/VideoTraffic.o \
     $O/videotraffic/VideoTrafficGenerator.o \
-    $O/videotraffic/QoEMetric.o \
     $O/videotraffic/VideoTrace.o \
-    $O/videotraffic/FileHandlers/SenderTrace.o \
+    $O/videotraffic/VideoTraffic.o \
+    $O/videotraffic/QoEMetric.o \
     $O/videotraffic/FileHandlers/DumpFile.o \
-    $O/videotraffic/VideoHandlers/Error.o \
-    $O/videotraffic/VideoHandlers/Misc.o \
-    $O/videotraffic/VideoHandlers/EvaluateTrace.o \
+    $O/videotraffic/FileHandlers/SenderTrace.o \
     $O/videotraffic/VideoHandlers/Stat.o \
-    $O/videotraffic/VideoHandlers/Bits.o \
-    $O/videotraffic/VideoHandlers/WriteMP4.o \
     $O/videotraffic/VideoHandlers/Read.o \
+    $O/videotraffic/VideoHandlers/WriteMP4.o \
+    $O/videotraffic/VideoHandlers/Misc.o \
+    $O/videotraffic/VideoHandlers/Bits.o \
+    $O/videotraffic/VideoHandlers/EvaluateTrace.o \
+    $O/videotraffic/VideoHandlers/Error.o \
     $O/CcnAppMessage_m.o \
     $O/CcnPacket_m.o \
     $O/AppMessages/MobilityAppMessage_m.o \
-    $O/ospfn/OSPFNPacket_m.o \
     $O/ospfn/OSPFNTimer_m.o \
     $O/ospfn/OSPFN_Event_m.o \
+    $O/ospfn/OSPFNPacket_m.o \
     $O/videotraffic/VideoPacket_m.o
 
 # Message files
@@ -120,9 +120,9 @@ MSGFILES = \
     CcnAppMessage.msg \
     CcnPacket.msg \
     AppMessages/MobilityAppMessage.msg \
-    ospfn/OSPFNPacket.msg \
     ospfn/OSPFNTimer.msg \
     ospfn/OSPFN_Event.msg \
+    ospfn/OSPFNPacket.msg \
     videotraffic/VideoPacket.msg
 
 # Other makefile variables (-K)

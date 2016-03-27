@@ -996,9 +996,9 @@ void CcnInet::toUpperLayer(cMessage *msg) {
                 << std::endl;
     }
 
-    int chunk_size = appmsg->getChunkSize();
+
     //std::cerr << "chunk_size: "+chunk_size << endl;
-    bytes_ += 500;
+    bytes_ += 1024;
 
     /*
      * Toda a aplicação CCN precisa se registrar na camada CCN.

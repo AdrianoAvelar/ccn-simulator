@@ -36,8 +36,8 @@ CcnDummyApp::~CcnDummyApp() {
     if (arrival != 0)
         cancelAndDelete(arrival);
 
-    if (event != 0)
-        cancelAndDelete(event);
+   // if (event != 0)
+   //     cancelAndDelete(event);
 
     if(thorugput_timer != 0)
         cancelAndDelete(thorugput_timer);

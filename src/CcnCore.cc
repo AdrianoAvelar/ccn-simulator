@@ -333,6 +333,8 @@ void CcnCore::fromMACFace(CcnPacket *ccnPkt_, CcnContext *ccnCtx) {
             // we are mimicking a message sent to the repository
             ccnr_response *ccnr_res = ccnr->lookup(ccnPkt);
 
+
+
             if (ccnr_res != NULL) {
                 /**
                  * If has a Repository add the packet to PIT, get the chunk and
@@ -495,6 +497,10 @@ void CcnCore::forwardingObject(CcnPacket *ccnPkt) {
 void CcnCore::sendInterest(CcnPacket *ccnPkt){
 
        chunk_t chunk = std::string(ccnPkt->getName());
+       if (chunk.find("#") == 0){
+           std::cerr << "CcnCore::sendInterest::Error: Content name starts with #" << std::endl;
+           return;
+       }
 
        bool isintable = ccnfib->isInTable(chunk);
        bool sendToDefaultGateway = false;
@@ -688,6 +694,7 @@ CcnCore::~CcnCore() {
 
 bool CcnCore::deliverContent(CcnPacket* ccnPkt) {
 
+    int size = ccnPkt->getChunkSize();
     int buffSize = ccnPkt->getByteArray().getDataArraySize();
     char *dataBuff = new char[buffSize];
     int dataLen = ccnPkt->copyDataToBuffer(dataBuff, buffSize);

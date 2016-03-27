@@ -10,6 +10,10 @@ DumpFile::DumpFile() {
     this->filePath = NULL;
     this->fp = NULL;
     is_open = false;
+    fileName = 0;
+    filePath= 0;
+    fp = 0;
+
 }
 
 void DumpFile::setFilePath(const char* filePath) {
@@ -39,8 +43,8 @@ const char* DumpFile::getFileName() {
 int DumpFile::open(const char* option) {
 
     if ((fp = fopen(filePath, option)) == NULL) {
-        fprintf(stderr, "DumpFile::open: can't open file %s\n", filePath);
-        exit(-1);
+        std::cerr << "DumpFile::open: can't open file " << filePath << std::endl;
+       return -1;
     }
 
     is_open = true;
@@ -83,9 +87,14 @@ bool DumpFile::isOpen() {
 }
 DumpFile::~DumpFile() {
 
-    delete filePath;
-    delete fileName;
-    delete fp;
+    if(filePath != 0)
+        delete filePath;
+
+    if(fileName != 0)
+        delete fileName;
+    if(fp != 0)
+        delete fp;
+
     close();
 
 }

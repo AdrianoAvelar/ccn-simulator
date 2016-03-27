@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scave:Analysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:scave="http://www.omnetpp.org/omnetpp/scave">
+  <inputs>
+    <inputs name="/ccnpp/simulations/MobCache/results/lce-true/cs-900/runid_0/ccn-id.vec"/>
+  </inputs>
+  <datasets>
+    <datasets name="appThroughput:vector ProviderMobility.host01.ccnApp[0]">
+      <items xsi:type="scave:Add" filterPattern="module(ProviderMobility.host01.ccnApp[0])" type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="appThroughput:vector ProviderMobility.host01.ccnApp[0]" lineNameFormat="">
+        <properties name="Line.Type" value="Linear"/>
+      </items>
+    </datasets>
+    <datasets name="appThroughput:vector ProviderMobility.host01.ccnApp[0]">
+      <items xsi:type="scave:Add" filterPattern="module(ProviderMobility.host01.ccnApp[0]) AND name(appThroughput:vector)" type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="appThroughput:vector ProviderMobility.host01.ccnApp[0]" lineNameFormat="">
+        <properties name="Line.Type" value="Linear"/>
+      </items>
+    </datasets>
+  </datasets>
+  <chartSheets>
+    <chartSheets name="default" charts="//@datasets/@datasets.1/@items.1"/>
+  </chartSheets>
+</scave:Analysis>

@@ -71,7 +71,7 @@ void CcnMobilityAgent::initialize(int stage) {
           ospfnrouter = r->getRouter();
     }
 
-    //WATCH_MAP(sessionsMap);
+//    WATCH_MAP(sessionsMap);
 }
 
 void CcnMobilityAgent::handleMessage(cMessage *msg) {
@@ -263,9 +263,9 @@ void CcnMobilityAgent::receiveSignal(cComponent *source, int signalID,  cObject 
 
     if (signalID == NF_L2_ASSOCIATED_NEWAP) {
 
-        std::cerr << "simtime: handover: " << simTime() << endl;
+        std::cerr << "CcnMobilityAgent::simtime: handover: " << simTime() << endl;
         notifyConsumers();
-        std::cerr << "simtime: handover: " << simTime() << endl;
+        std::cerr << "CcnMobilityAgent::simtime: handover: " << simTime() << endl;
         notifyConsumers();
         //        isMobileHost = true;
         //        //In the new network, the forwarding table is not necessary.

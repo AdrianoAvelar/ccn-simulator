@@ -42,6 +42,7 @@ simple CcnVideoApp like ICcnApp
         bool evaluate = default(false);
         bool toYuv = default(false);
         bool qoe_metrics = default(false);
+        double requestInterval @unit(s) = default(3s);
         
         string ccndModule = "^.ccnlayer.ccnd";
         

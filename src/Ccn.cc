@@ -482,6 +482,7 @@ void Ccn::fromUpperLayer(cMessage* msg) {
         //get and remove "ccnx:/cin/ufpe" to "/cin/ufpe"
         //returns protocol ID
         Util::getAndRemoveProtocol(name);
+        int x = c->getChunkSize();
 
         CcnPacket *ccnPkt = new CcnPacket();
         ccnPkt->setChunkSize(c->getChunkSize());

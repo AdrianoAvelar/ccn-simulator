@@ -6,3 +6,8 @@
 *~
 *.sca
 *.prefs
+*.mp4
+*.mv4
+*.yuv
+*.txt
+/plots

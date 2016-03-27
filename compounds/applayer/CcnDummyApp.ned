@@ -29,13 +29,13 @@ simple CcnDummyApp like ICcnApp
         
         string base_contentname = default("/cin/ufpe/movie");
         
-        int chunkSize @unit(kb) = default(500kb);
+        int chunkSize @unit(kb) = default(1024kb);
 
         //Sender interval: exponential(1/lambda).
         double lambda = default(0.5);
 
-        double startTime @unit(s) = default(0);
-        double stopTime @unit(s) = default(0);
+        double startTime @unit(s) = default(0s);
+        double stopTime @unit(s) = default(100000s);
         
         string ccndModule = "^.ccnlayer.ccnd";
 

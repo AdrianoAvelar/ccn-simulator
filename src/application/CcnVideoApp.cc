@@ -147,43 +147,16 @@ void CcnVideoApp::handleMessage(cMessage *msg) {
 
         } else if (msg->getKind() == EVALUATE) {
 
-            video->finish();
-
-            if (par("evaluate").boolValue() == true)
-                video->reconstructing("a01.mp4");
-
-            if (par("toYuv").boolValue() == true)
-                video->toYuv();
-
-            if(par("qoe_metrics").boolValue() == true)
-            {
-                metric->calculatePSNR();
-                metric->calculateSSIM();
-            }
-
-            if (par("cleanall").boolValue() == true)
-                video->cleanAll();
-
-            if (count_req < video_count || video_count < 0) {
-                event->setKind(SEND_OP);
-                scheduleAt(simTime(),event);
-            }
+            evaluate();
             delete msg;
 
-        } else if (msg->getKind() == SEND_OP) {
+        } else if (msg->getKind() == EVALUATE_INCOMPLETED_FILE){
+
+            evaluate(par("requestInterval").doubleValue());
+            delete msg;
+        }else if (msg->getKind() == SEND_OP) {
 
             requestFile();
-
-        } else if (msg->getKind() == START_DUMMY) {
-
-            if(dummy_active){
-                requestDummyFile();
-
-                pktsent++;
-                arrival->setKind(START_DUMMY);
-                double nextDummySend = exponential(1 / lambda);
-                scheduleAt(simTime() + nextDummySend, arrival);
-            }
 
         } else if (msg->getKind() == TIMEOUT) {
             //We lost last packet, so get next.
@@ -199,8 +172,10 @@ void CcnVideoApp::handleMessage(cMessage *msg) {
 
                 //Send other video if exists.
                 cMessage *eval = new cMessage("EVALUATE");
-                eval->setKind(EVALUATE);
+                eval->setKind(EVALUATE_INCOMPLETED_FILE);
                 scheduleAt(simTime(),eval);
+
+                retrans_attempts = 0;
             }
 
         } else if (msg->getKind() == STOP_DUMMY) {
@@ -247,34 +222,38 @@ void CcnVideoApp::handleMessage(cMessage *msg) {
     }
 }
 
-void CcnVideoApp::requestDummyFile() {
 
-    getParentModule()->bubble("send");
+void CcnVideoApp::evaluate(double delay_to_another_request){
 
-    CcnAppMessage * ccn_i = new CcnAppMessage("Interest");
-    ccn_i->setType(CCN_APP_INTEREST);
-    ccn_i->setSeqNr(1);
-    ccn_i->setNumChunks(1);
-    ccn_i->setChunkSize(normal(500,250));
-    ccn_i->setAppId(appId);
+    video->finish();
 
-    unsigned int number = Ccnr::zipf.value(dblrand());
-    char name[NAME_SIZE];
-    sprintf(name, "%s_dummy_%u", base_contentname.c_str(),number);
+    if (par("evaluate").boolValue() == true)
+        video->reconstructing("a01.mp4");
 
-    ccn_i->setContentName(name);
+    if (par("toYuv").boolValue() == true)
+        video->toYuv();
 
-    downloads[string(ccn_i->getContentName())] = simTime().dbl();
-    send(ccn_i, "ccnOut");
+    if(par("qoe_metrics").boolValue() == true)
+    {
+        metric->calculatePSNR();
+        metric->calculateSSIM();
+    }
+
+    if (par("cleanall").boolValue() == true)
+        video->cleanAll();
+
+    if (count_req < video_count || video_count < 0) {
+        event->setKind(SEND_OP);
+        scheduleAt(simTime() + delay_to_another_request,event);
+    }
+
 }
 
 void CcnVideoApp::requestFile() {
 
     char svideo_name[64], rvideo_name[64];
-    sprintf(rvideo_name, "rd_a0%d_%s_rid_%d.tr", count_req,
-            getParentModule()->getName(), currentRunId);
-    sprintf(svideo_name, "sd_a0%d_%s_rid_%d.tr", count_req,
-            getParentModule()->getName(), currentRunId);
+    sprintf(rvideo_name, "rd_a0%d_%s_rid_%d.tr", count_req,getParentModule()->getName(), currentRunId);
+    sprintf(svideo_name, "sd_a0%d_%s_rid_%d.tr", count_req,getParentModule()->getName(), currentRunId);
 
     video->clear();
 
@@ -283,6 +262,7 @@ void CcnVideoApp::requestFile() {
     video->setTraceFile(svideo_name, rvideo_name);
 
     stringstream contentname;
+    std::cerr << "CcnVideoApp::requestFile: random: " << dblrand() << std::endl;
     unsigned int number = Ccnr::zipf.value(dblrand());
 
     contentname << number;
@@ -359,8 +339,6 @@ void CcnVideoApp::handlerData(CcnAppMessage * msg) {
         video->receiveMessage(chunk);
 
         if (!video->getWasSent()) {
-
-
 
             int i;
             double nextSend;

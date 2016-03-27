@@ -303,8 +303,11 @@ void VideoTrace::reconstructing(string mp4_original) {
 }
 VideoTrace::~VideoTrace() {
 
-    delete rdumpfile;
-    delete sdumpfile;
+    if(rdumpfile != 0)
+        delete rdumpfile;
+
+    if(sdumpfile != 0)
+        delete sdumpfile;
 
 }
 
