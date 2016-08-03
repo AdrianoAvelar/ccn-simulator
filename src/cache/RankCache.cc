@@ -17,7 +17,41 @@ RankCache::RankCache(uint32_t cache_size) {
     neg = 0;
 }
 
-bool RankCache::data_to_cache(CcnPacket *data) {
+bool RankCache::data_to_cache(CcnPacket *data)
+{
+
+      n++;
+      bool decision = false;
+      double prc = 0;
+      chunk_t name = Util::removeChunkId(std::string(data->getName()));
+      int seqn = Util::getChunkId(std::string(data->getName()));
+     // __history ::iterator it = history.find(name);
+
+      int Hc = data->getTSB();
+      int Hh = data->getTSI();
+      double Rp = ((double) Hc / Hh);
+
+
+      if (pos % 100)
+           updateRank();
+
+       prc = Rp*Rc;
+      //prop.record(prc);
+
+      double x = dblrand();
+      if (x < prc) {
+          decision = true;
+      }
+
+      if(decision)
+          pos++;
+      else
+          neg++;
+
+      return decision;
+}
+
+bool RankCache::data_to_cache_orignal(CcnPacket *data) {
 
     n++;
     bool decision = false;

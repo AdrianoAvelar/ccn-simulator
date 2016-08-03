@@ -411,17 +411,21 @@ network RNP_IPE_MOBILITY
             @display("r=,,#707070;p=98,250;is=l");
         }
 
-//        host03: WirelessCCNHost {
-//            @display("r=,,#707070;p=1003,214;is=l");
-//        }
-//
-//        host04: WirelessCCNHost {
-//            @display("r=,,#707070;p=85,725;is=l");
-//        }
-//
-//        host05: WirelessCCNHost {
-//            @display("r=,,#707070;p=456,70;is=l");
-//        }
+        host03: WirelessCCNHost {
+            @display("r=,,#707070;p=512,101;is=l");
+        }
+
+        host04: WirelessCCNHost {
+            @display("r=,,#707070;p=98,517;is=l");
+        }
+
+        host05: WirelessCCNHost {
+            @display("r=,,#707070;p=474,424;is=l");
+        }
+
+        host06: WirelessCCNHost {
+            @display("r=,,#707070;p=626,608;is=l");
+        }
 //
 //        host06: WirelessCCNHost {
 //            @display("r=,,#707070;p=377,927;is=l");

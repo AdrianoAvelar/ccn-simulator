@@ -11,24 +11,24 @@ repeat=10
 RESULT_FILES=()
 
 RESULT_DIR=../plots
-#STAT_VECTOR=("hitRate*" "hitHop*" "rttAll" "app*" )
-STAT_VECTOR=("app*")
-
+STAT_VECTOR=("hitRate*" "hitHop*" "rttAll*" "app*" )
+#STAT_VECTOR=("app*")
+STAT_SCALAR=("pkts_d*" "server_hit*")
 
 
 function calculate_sca() {
-	policy=$1/$2
+	policy=$1/$2/$3
 	echo "Scalar: Calculation ...  $policy # metric: $3"
 	#METRICAS="server_hit"
-	#grep $3 $policy/ccn-id.sca | awk '{print $4}' | tee -a $RESULT_DIR/$1_$3.txt
-	grep $3 $policy/ccn-id.sca | awk '{sum+=$4; array[NR]=$4} END {for(x=1;x<=NR;x++){sumsq+=((array[x]-(sum/NR))**2);} print sum/NR};' | tee -a $RESULT_DIR/$1_$3.txt
+	echo "$4 $policy/ccn-id.sca "
+	grep $4 $policy/ccn-id.sca | awk '{sum+=$4; array[NR]=$4} END {for(x=1;x<=NR;x++){sumsq+=((array[x]-(sum/NR))^2);} print sum/NR};' | tee -a $RESULT_DIR/$1_${4::-1}.txt
 	
-	RESULT_FILES+=("$RESULT_DIR/$1_$3.txt")
+	RESULT_FILES+=("$RESULT_DIR/$1_${4::-1}.txt")
 }
 
 function calculate_vec() {
 
-	policy=$1/$2/runid_$3
+	policy=$1/$2/$3
 	echo "Vector: Calculation ...  $policy # metric: $4"
 	scavetool vector -p "name($4)" -O out $policy/ccn-id.vec
 	#Delete line which doesn't start with numeric
@@ -41,9 +41,9 @@ function calculate_vec() {
 
 	#awk '{sum+=$4; array[NR]=$4} END {for(x=1;x<=NR;x++){sumsq+=((array[x]-(sum/NR))**2);} print "mean: " sum/NR " std: " sqrt(sumsq/NR) " rows: " NR; };' output.vec
 
-	awk '{sum+=$4; array[NR]=$4} END {for(x=1;x<=NR;x++){sumsq+=((array[x]-(sum/NR))^2);} print sum/NR};' output.vec | tee -a $RESULT_DIR/$1_$4.txt
+	awk '{sum+=$4; array[NR]=$4} END {for(x=1;x<=NR;x++){sumsq+=((array[x]-(sum/NR))^2);} print sum/NR};' output.vec | tee -a $RESULT_DIR/$1_${4::-1}.txt
 	
-	RESULT_FILES+=("$RESULT_DIR/$1_$4.txt")
+	RESULT_FILES+=("$RESULT_DIR/$1_${4::-1}.txt")
 
 	rm -f output.vec
     rm -f out.vec
@@ -79,9 +79,20 @@ for (( j = 0 ; j < ${#STAT_VECTOR[@]} ; j++ )) do
 	    
 		for (( k = 0 ; k < ${#SUBDIR_VEC[@]} ; k++ )) do
 		
-		    for (( u = 0 ; u < $repeat ; u++ )) do
-			    calculate_vec ${DIRS_VEC[$i]} ${SUBDIR_VEC[$k]} $u ${STAT_VECTOR[$j]}
-			    echo "calculate_vec ${DIRS_VEC[$i]} ${SUBDIR_VEC[$k]} $u ${STAT_VECTOR[$j]}"
+
+			RUNIDS=`ls -l ${DIRS_VEC[$i]}/${SUBDIR_VEC[$k]} | egrep '^d' | awk '{print $9}'`
+			RUNIDS_DIR=()
+			for SUBDIR in $RUNIDS
+			do
+			RUNIDS_DIR+=("${SUBDIR}")
+			done
+
+			#echo "RunIds: ".${SUBDIR_VEC[$k]}
+
+		    for (( u = 0 ; u < ${#RUNIDS_DIR[@]} ; u++ )) do
+
+			    echo "calculate_vec ${DIRS_VEC[$i]} ${SUBDIR_VEC[$k]} ${RUNIDS_DIR[$u]} ${STAT_VECTOR[$j]}"
+					  calculate_vec ${DIRS_VEC[$i]} ${SUBDIR_VEC[$k]} ${RUNIDS_DIR[$u]} ${STAT_VECTOR[$j]}
 			done
 			
 		done
@@ -105,9 +116,20 @@ echo "*** ${STAT_SCALAR[$j]} ***"
 	
 		for (( k = 0 ; k < ${#SUBDIR_VEC[@]} ; k++ )) do
 		
-		    for (( u = 0 ; u < repeat ; uk++ )) do
-			    calculate_sca ${DIRS_VEC[$i]} ${SUBDIR_VEC[$k]} $u ${STAT_SCALAR[$j]}
+			RUNIDS=`ls -l ${DIRS_VEC[$i]}/${SUBDIR_VEC[$k]} | egrep '^d' | awk '{print $9}'`
+			RUNIDS_DIR=()
+			for SUBDIR in $RUNIDS
+			do
+			RUNIDS_DIR+=("${SUBDIR}")
 			done
+
+			#echo "RunIds: ".${SUBDIR_VEC[$k]}
+
+		    for (( u = 0 ; u < ${#RUNIDS_DIR[@]} ; u++ )) do
+
+				calculate_sca ${DIRS_VEC[$i]} ${SUBDIR_VEC[$k]} ${RUNIDS_DIR[$u]} ${STAT_SCALAR[$j]}
+			done
+
 		done
 		
 	done

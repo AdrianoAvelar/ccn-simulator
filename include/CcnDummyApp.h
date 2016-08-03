@@ -53,7 +53,7 @@ public:
 
 private:
     VideoTrace *video;
-    //cMessage *event;
+    //'cMessage *event;
     cMessage *timeout_video;
     QoEMetric *metric ;
 

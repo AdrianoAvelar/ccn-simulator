@@ -39,6 +39,7 @@ class RankCache: public DecisionPolicy {
 public:
     RankCache(uint32_t cache_size); //: k(0.5){; } //(int c):N(c){;}
     bool data_to_cache(CcnPacket *data);
+    bool data_to_cache_orignal(CcnPacket *data);
     void updateRank();
 
 private:

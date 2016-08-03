@@ -154,13 +154,14 @@ void VideoTrace::finish() {
         char buf[100];
         double rdelay = 0;
         double gap = 0;
-        //cerr << VideoChunks.size() << endl;
+        cerr << "VideoTrace::finish: videochunk size: " << VideoChunks.size() << endl;
         for (; it != VideoChunks.end(); it++) {
 
             gap = (*it).pkt_id_ - (last + 1);
 
+
             //delayed packets are discarded
-            if (gap < 0) {
+            if (gap < 0 || gap > 100) {
                 out_of_order++;
                 continue;
             }
