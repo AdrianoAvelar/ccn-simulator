@@ -53,8 +53,6 @@ void CcnMobilityAgent::registerMyselfInCcnLayer(){
 void CcnMobilityAgent::initialize(int stage) {
 
     //ft = ForwardingTableAccess().get();
-
-
     if(stage == 1){
 //        NotificationBoard* nb = NotificationBoardAccess().get();
 //        nb->subscribe(this, NF_L2_ASSOCIATED_NEWAP);

@@ -73,6 +73,8 @@ void base_cache::initialize() {
         decisor = new Never();
     } else if (decision_policy.find("rank_cache") == 0){
         decisor = new RankCache(cache_size);
+    }else if (decision_policy.find("yrao") == 0){
+        decisor = new Always();
     }
 
     //Cache statistics

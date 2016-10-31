@@ -6,7 +6,7 @@ echo "************************"
 echo $1
 echo "************************"
 
-repeat=10
+repeat=1
 
 RESULT_FILES=()
 

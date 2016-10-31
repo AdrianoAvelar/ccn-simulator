@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for ccnpp
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -I../../inet-3.0/src/inet/linklayer/common -I../../inet-3.0/src/inet/networklayer/ipv4 -I../../inet-3.0/src/inet/routing/ospfv2/messagehandler -I../../inet-3.0/src -I../../inet-3.0/src/inet/networklayer/contract/ipv4 -I../../inet-3.0/src/inet/common -I../../inet-3.0/src/inet/networklayer/contract -I../../inet-3.0/src/inet/networklayer/contract/ipv6 -I../include -I../../inet-3.0/src/inet/transportlayer/contract/udp -I../../inet-3.0/src/inet/routing/ospfv2 -I../../inet-3.0/src/inet/networklayer/common -I../../inet-3.0/src/inet/common/queue -L../../inet-3.0/out/$$\(CONFIGNAME\)/src -lgpac -lINET -DINET_IMPORT -KINET_PROJ=../../inet-3.0
+#  opp_makemake -f --deep -I../../inet-3.0/src/inet/linklayer/common -I../../inet-3.0/src -I../../inet-3.0/src/inet/transportlayer/contract/udp -I../../inet-3.0/src/inet/networklayer/contract/ipv6 -I../include -I../../inet-3.0/src/inet/routing/ospfv2/messagehandler -I../../inet-3.0/src/inet/common/queue -I../../inet-3.0/src/inet/routing/ospfv2 -I../../inet-3.0/src/inet/networklayer/contract/ipv4 -I../../inet-3.0/src/inet/common -I../../inet-3.0/src/inet/networklayer/common -I../../inet-3.0/src/inet/networklayer/ipv4 -I../../inet-3.0/src/inet/networklayer/contract -L../../inet-3.0/out/$$\(CONFIGNAME\)/src -lgpac -lINET -DINET_IMPORT -KINET_PROJ=../../inet-3.0
 #
 
 # Name of target to be created (-o option)
@@ -16,18 +16,18 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(CMDENV_LIBS)
 # C++ include paths (with -I)
 INCLUDE_PATH = \
     -I../../inet-3.0/src/inet/linklayer/common \
-    -I../../inet-3.0/src/inet/networklayer/ipv4 \
-    -I../../inet-3.0/src/inet/routing/ospfv2/messagehandler \
     -I../../inet-3.0/src \
-    -I../../inet-3.0/src/inet/networklayer/contract/ipv4 \
-    -I../../inet-3.0/src/inet/common \
-    -I../../inet-3.0/src/inet/networklayer/contract \
+    -I../../inet-3.0/src/inet/transportlayer/contract/udp \
     -I../../inet-3.0/src/inet/networklayer/contract/ipv6 \
     -I../include \
-    -I../../inet-3.0/src/inet/transportlayer/contract/udp \
-    -I../../inet-3.0/src/inet/routing/ospfv2 \
-    -I../../inet-3.0/src/inet/networklayer/common \
+    -I../../inet-3.0/src/inet/routing/ospfv2/messagehandler \
     -I../../inet-3.0/src/inet/common/queue \
+    -I../../inet-3.0/src/inet/routing/ospfv2 \
+    -I../../inet-3.0/src/inet/networklayer/contract/ipv4 \
+    -I../../inet-3.0/src/inet/common \
+    -I../../inet-3.0/src/inet/networklayer/common \
+    -I../../inet-3.0/src/inet/networklayer/ipv4 \
+    -I../../inet-3.0/src/inet/networklayer/contract \
     -I. \
     -IAppMessages \
     -Iapplication \

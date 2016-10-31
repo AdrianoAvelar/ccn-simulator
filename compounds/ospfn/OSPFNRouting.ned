@@ -27,7 +27,7 @@ simple OSPFNRouting
         //xml ospfConfig; // xml containing the full OSPF AS configuration
 
         // default values for attributes of interface xml entries:
-        int helloInterval @unit(s) = default(10s);
+        int helloInterval @unit(s) = default(1s);
         int pollInterval @unit(s) = default(120s);
         int routerDeadInterval @unit(s) = default(40s);
         int retransmissionInterval @unit(s) = default(5s);

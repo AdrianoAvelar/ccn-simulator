@@ -24,17 +24,19 @@ module StandardCCNHost extends CCNNodeBase
     parameters:
 
         bool ospfn = default(false);
-        bool providerMobility = default(false);
-
+        bool mobilityproposal = default(false);
+        
         @display("bgb=705,476;i=abstract/router");
+        
     submodules:
         ospfn: OSPFNRouting if ospfn == true {
             @display("p=446,181");
         }
 
-        mobilityAgent: CcnMobilityAgent if providerMobility == true {
+        mobilityAgent: CcnMobilityAgent if mobilityproposal == true {
             @display("p=215,119");
         }
+        
     connections allowunconnected:
 
         if (ospfn == true) {
@@ -42,7 +44,7 @@ module StandardCCNHost extends CCNNodeBase
             ccnlayer.upperIn++ <-- ospfn.ipOut;
         }
         
-        if(providerMobility == true){
+        if(mobilityproposal == true){
           	ccnlayer.upperOut++ --> mobilityAgent.ccnIn;
             ccnlayer.upperIn++ <-- mobilityAgent.ccnOut;   
         }
